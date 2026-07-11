@@ -50,6 +50,26 @@ fn cleanup_db(path: &PathBuf) {
     let _ = std::fs::remove_file(path);
 }
 
+/// Poll until `table` holds exactly `expected` rows, returning an open
+/// connection for follow-up assertions. Accounting records are persisted on a
+/// dedicated writer thread after the response has already been sent (and
+/// aborting the proxy task does not drain that thread), so tests must wait
+/// for the row to land rather than race the writer.
+async fn wait_for_rows(db_path: &Path, table: &str, expected: i64) -> rusqlite::Connection {
+    let sql = format!("SELECT COUNT(*) FROM {table}");
+    for _ in 0..100 {
+        if let Ok(conn) = rusqlite::Connection::open(db_path) {
+            conn.busy_timeout(Duration::from_secs(5))
+                .expect("busy_timeout");
+            if conn.query_row(&sql, [], |row| row.get::<_, i64>(0)) == Ok(expected) {
+                return conn;
+            }
+        }
+        tokio::time::sleep(Duration::from_millis(50)).await;
+    }
+    panic!("expected {expected} rows in {table} within the polling timeout");
+}
+
 /// Start a mock upstream server that calls the given handler for each request.
 /// Returns the base URL and a handle to the server task.
 async fn start_mock_upstream(
@@ -298,17 +318,10 @@ async fn sse_streaming() {
     let body = resp.text().await.unwrap();
     assert!(body.contains("usage"), "SSE body should contain usage");
 
-    // Drop the proxy handle so the server task drains its database writers
-    // before the assertion.
+    wait_for_rows(&db_path, "token_usage", 1).await;
+
     proxy_handle.abort();
     let _ = proxy_handle.await;
-
-    let conn = rusqlite::Connection::open(&db_path).expect("open db");
-    let count: i64 = conn
-        .query_row("SELECT COUNT(*) FROM token_usage", [], |row| row.get(0))
-        .unwrap();
-    assert_eq!(count, 1, "usage should be recorded for SSE responses");
-
     cleanup_db(&db_path);
 }
 
@@ -335,17 +348,7 @@ async fn upstream_failure() {
 
     // When gpu_watts > 0 exactly one energy row is recorded for the failed
     // transport, with elapsed_secs measuring from start to the failure.
-    proxy_handle.abort();
-    let _ = proxy_handle.await;
-
-    let conn = rusqlite::Connection::open(&db_path).expect("open db");
-    let energy_count: i64 = conn
-        .query_row("SELECT COUNT(*) FROM energy", [], |row| row.get(0))
-        .unwrap();
-    assert_eq!(
-        energy_count, 1,
-        "exactly one energy row for a transport failure with gpu_watts > 0"
-    );
+    let conn = wait_for_rows(&db_path, "energy", 1).await;
     let gpu_watts: f64 = conn
         .query_row("SELECT gpu_watts FROM energy LIMIT 1", [], |row| row.get(0))
         .unwrap();
@@ -366,6 +369,8 @@ async fn upstream_failure() {
         .unwrap();
     assert_eq!(usage_count, 0);
 
+    proxy_handle.abort();
+    let _ = proxy_handle.await;
     cleanup_db(&db_path);
 }
 
@@ -462,30 +467,7 @@ async fn energy_recording_on_successful_proxy() {
     assert_eq!(resp.text().await.unwrap(), "{\"content\":\"hello\"}");
 
     // Poll until the background writer has committed the energy row.
-    let mut energy_conn: Option<rusqlite::Connection> = None;
-    for _ in 0..100 {
-        if let Ok(c) = rusqlite::Connection::open(&db_path) {
-            let count: Result<i64, _> =
-                c.query_row("SELECT COUNT(*) FROM energy", [], |row| row.get(0));
-            if let Ok(1) = count {
-                energy_conn = Some(c);
-                break;
-            }
-        }
-        tokio::time::sleep(Duration::from_millis(50)).await;
-    }
-    let conn = energy_conn.expect("energy row should have been recorded within the timeout");
-    conn.busy_timeout(Duration::from_secs(5))
-        .expect("busy_timeout");
-
-    // Energy should be recorded (elapsed_secs > 0, gpu_watts > 0).
-    let energy_count: i64 = conn
-        .query_row("SELECT COUNT(*) FROM energy", [], |row| row.get(0))
-        .unwrap();
-    assert_eq!(
-        energy_count, 1,
-        "energy should be recorded for every successful proxy with gpu_watts > 0"
-    );
+    let conn = wait_for_rows(&db_path, "energy", 1).await;
 
     let elapsed: f64 = conn
         .query_row("SELECT elapsed_secs FROM energy LIMIT 1", [], |row| {
@@ -1598,15 +1580,7 @@ async fn embeddings_passthrough_records_usage() {
     assert_eq!(body["model"].as_str().unwrap(), "embed-model");
     assert_eq!(body["data"][0]["embedding"][0].as_f64().unwrap(), 0.1);
 
-    // Drain the accounting writer before reading the database.
-    proxy_handle.abort();
-    let _ = proxy_handle.await;
-
-    let conn = rusqlite::Connection::open(&db_path).expect("open db");
-    let count: i64 = conn
-        .query_row("SELECT COUNT(*) FROM token_usage", [], |r| r.get(0))
-        .unwrap();
-    assert_eq!(count, 1, "exactly one usage row expected");
+    let conn = wait_for_rows(&db_path, "token_usage", 1).await;
 
     let (endpoint, input, output, total): (String, i64, i64, i64) = conn
         .query_row(
@@ -1621,6 +1595,8 @@ async fn embeddings_passthrough_records_usage() {
     assert_eq!(output, 0);
     assert_eq!(total, 8);
 
+    proxy_handle.abort();
+    let _ = proxy_handle.await;
     cleanup_db(&db_path);
 }
 
