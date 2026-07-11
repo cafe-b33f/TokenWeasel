@@ -12,6 +12,9 @@ usage, estimated cost, and optional GPU energy usage in SQLite.
 It works with Ollama, llama.cpp, LM Studio, vLLM, DeepSeek, OpenRouter, and
 other services that expose an OpenAI-compatible API.
 
+<img width="1267" height="827" alt="image" src="https://github.com/user-attachments/assets/a1fbf381-ae85-4486-b709-bf276296cf90" />
+
+
 ## Features
 
 - Proxies chat, completion, embedding, streaming, and backend-native requests
