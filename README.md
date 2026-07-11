@@ -25,6 +25,10 @@ other services that expose an OpenAI-compatible API.
 TokenWeasel does not run models itself. You need an LLM backend or a compatible
 hosted API.
 
+_Nota Bene_: TokenWeasel has no objective to compete with LiteLLM for large
+production environments. This projects aims at maximizing portability and ease of
+configuration for local and small team setups.
+
 ## Requirements
 
 - Rust 1.88 or later to build from source
