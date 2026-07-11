@@ -2,6 +2,15 @@
 
 Notable changes to TokenWeasel are documented in this file.
 
+## [0.1.1] - 2026-07-11
+
+### Changed
+
+- Linux x86-64 release binaries are now built against GNU/glibc instead of
+  MUSL; they are no longer statically linked.
+- Updated dependencies, notably sha2 0.11, rand 0.10, rcgen 0.14, and
+  tower-http 0.7, and unified dependency versions across the workspace.
+
 ## [0.1.0]
 
 Initial public release.
@@ -21,4 +30,5 @@ Initial public release.
 - Automated Linux x86-64, Linux ARM64, and Windows x86-64 release builds,
   packaged with SHA-256 checksums.
 
+[0.1.1]: https://github.com/cafe-b33f/TokenWeasel/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/cafe-b33f/TokenWeasel/releases/tag/v0.1.0
