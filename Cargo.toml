@@ -33,7 +33,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 axum-login = "0.18"
 axum-server = { version = "0.8", default-features = false, features = ["tls-rustls-no-provider"] }
-rcgen = { version = "0.13", default-features = false, features = ["pem", "ring"] }
+rcgen = { version = "0.14", default-features = false, features = ["pem", "ring"] }
 rustls = { version = "0.23", default-features = false, features = ["ring"] }
 tower-sessions = "0.14"
 twl-pricing = { path = "crates/twl-pricing" }
