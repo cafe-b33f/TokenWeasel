@@ -61,6 +61,6 @@ fn generate_self_signed(hostnames: &[String]) -> Result<(String, String), rcgen:
     let certified = rcgen::generate_simple_self_signed(hostnames.to_vec())?;
     Ok((
         certified.cert.pem().to_string(),
-        certified.key_pair.serialize_pem().to_string(),
+        certified.signing_key.serialize_pem().to_string(),
     ))
 }

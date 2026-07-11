@@ -7,10 +7,10 @@ pub mod accounts;
 pub mod apikey;
 
 use argon2::password_hash::{
-    Error as PasswordHashError, PasswordHash, PasswordHasher, PasswordVerifier, SaltString,
+    Error as PasswordHashError, PasswordHash, PasswordHasher, PasswordVerifier, Salt, SaltString,
 };
 use argon2::Argon2;
-use rand::rngs::OsRng;
+use rand::distr::{Alphanumeric, SampleString};
 use rand::Rng;
 use sha2::{Digest, Sha256};
 use thiserror::Error;
@@ -50,7 +50,7 @@ pub fn parse_bearer_credentials(value: &str) -> Option<&str> {
 
 /// Compute the lowercase hexadecimal SHA-256 digest of a string slice.
 pub fn sha256_hex(input: &str) -> String {
-    format!("{:x}", Sha256::digest(input.as_bytes()))
+    hex::encode(Sha256::digest(input.as_bytes()))
 }
 
 /// A database-backed user returned on successful authentication.
@@ -65,12 +65,15 @@ pub struct AuthUser {
 }
 
 /// Hash a plaintext password using Argon2id with default parameters and a
-/// random salt generated from OsRng.
+/// random salt generated from the operating system's random source.
 ///
 /// Returns the encoded password hash string on success, or a [`PasswordError`]
 /// on failure.
 pub fn hash_password(password: &str) -> Result<String, PasswordError> {
-    let salt = SaltString::generate(&mut OsRng);
+    let mut salt_bytes = [0u8; Salt::RECOMMENDED_LENGTH];
+    rand::rng().fill_bytes(&mut salt_bytes);
+    let salt = SaltString::encode_b64(&salt_bytes)
+        .map_err(|e| PasswordError(format!("salt encoding: {e}")))?;
     let hasher = Argon2::default();
     hasher
         .hash_password(password.as_bytes(), &salt)
@@ -97,15 +100,7 @@ pub fn verify_password(password: &str, stored_hash: &str) -> Result<bool, Passwo
 }
 
 fn random_alphanumeric(len: usize) -> String {
-    const ALPHANUM: &[u8] = b"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-    let mut value = String::with_capacity(len);
-    let mut rng = OsRng;
-    for _ in 0..len {
-        let idx = rng.gen_range(0..ALPHANUM.len());
-        value.push(ALPHANUM[idx] as char);
-    }
-    value
+    Alphanumeric.sample_string(&mut rand::rng(), len)
 }
 
 /// Generate a random alphanumeric password of 24 characters.

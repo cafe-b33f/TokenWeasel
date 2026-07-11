@@ -6,7 +6,6 @@
 use std::sync::Arc;
 
 use http::HeaderMap;
-use sha2::{Digest, Sha256};
 
 use twl_store::IdentityStore;
 
@@ -73,7 +72,7 @@ pub async fn extract_and_validate_client_key(
         None => return ClientKeyResult::NotPresent,
     };
 
-    let hash = format!("{:x}", Sha256::digest(raw_key.as_bytes()));
+    let hash = crate::sha256_hex(&raw_key);
 
     let identity_clone = identity.clone();
     let result = tokio::task::spawn_blocking(move || identity_clone.get_api_key_id(&hash)).await;

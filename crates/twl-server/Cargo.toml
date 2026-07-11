@@ -40,7 +40,7 @@ thiserror = { workspace = true }
 rustc-hash = { workspace = true }
 base64 = "0.22"
 rand = "0.10"
-rust-embed = "8"
+rust-embed = "8.12"
 
 [dev-dependencies]
 tokio = { workspace = true }
