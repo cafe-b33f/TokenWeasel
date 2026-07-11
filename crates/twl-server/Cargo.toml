@@ -38,9 +38,9 @@ rcgen = { workspace = true }
 rustls = { workspace = true }
 thiserror = { workspace = true }
 rustc-hash = { workspace = true }
-base64 = "0.22"
-rand = "0.10"
-rust-embed = "8.12"
+base64 = { workspace = true }
+rand = { workspace = true }
+rust-embed = { workspace = true }
 
 [dev-dependencies]
 tokio = { workspace = true }

@@ -10,11 +10,11 @@ homepage.workspace = true
 description = "Pure authentication primitives: password hashing and API key generation"
 
 [dependencies]
-argon2 = "0.5"
-hex = "0.4"
+argon2 = { workspace = true }
+hex = { workspace = true }
 http = { workspace = true }
-rand = "0.10"
-sha2 = "0.11"
+rand = { workspace = true }
+sha2 = { workspace = true }
 tokio = { workspace = true }
 thiserror = { workspace = true }
 twl-store = { workspace = true }
