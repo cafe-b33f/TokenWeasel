@@ -1,7 +1,7 @@
 # TokenWeasel
 
-[![CI](https://github.com/CafeB33f/TokenWeasel/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/CafeB33f/TokenWeasel/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/CafeB33f/TokenWeasel?display_name=tag&sort=semver)](https://github.com/CafeB33f/TokenWeasel/releases)
+[![CI](https://github.com/cafe-b33f/TokenWeasel/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cafe-b33f/TokenWeasel/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/cafe-b33f/TokenWeasel?display_name=tag&sort=semver)](https://github.com/cafe-b33f/TokenWeasel/releases)
 [![Rust 1.88+](https://img.shields.io/badge/rust-1.88%2B-orange.svg)](rust-toolchain.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
