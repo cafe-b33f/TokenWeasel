@@ -2298,7 +2298,7 @@ checksum = "e421abadd41a4225275504ea4d6566923418b7f05506fbc9c0fe86ba7396114b"
 
 [[package]]
 name = "twl"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "tokio",
  "tracing-subscriber",
@@ -2308,7 +2308,7 @@ dependencies = [
 
 [[package]]
 name = "twl-auth"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "argon2",
  "hex",
@@ -2322,7 +2322,7 @@ dependencies = [
 
 [[package]]
 name = "twl-backends"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "arc-swap",
  "crossbeam-utils",
@@ -2336,7 +2336,7 @@ dependencies = [
 
 [[package]]
 name = "twl-config"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "http",
@@ -2351,7 +2351,7 @@ dependencies = [
 
 [[package]]
 name = "twl-pricing"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "serde",
  "serde_json",
@@ -2360,7 +2360,7 @@ dependencies = [
 
 [[package]]
 name = "twl-provider"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "serde",
  "serde_json",
@@ -2370,7 +2370,7 @@ dependencies = [
 
 [[package]]
 name = "twl-server"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "async-stream",
  "async-trait",
@@ -2408,7 +2408,7 @@ dependencies = [
 
 [[package]]
 name = "twl-store"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "chrono",
  "r2d2",
@@ -2422,7 +2422,7 @@ dependencies = [
 
 [[package]]
 name = "twl-types"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "serde",
 ]
