@@ -1,0 +1,22 @@
+[package]
+name = "twl"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Lightweight reverse proxy for OpenAI-compatible LLM backends with usage, cost, and energy accounting"
+publish = false
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "../../README.md"
+keywords = ["llm", "proxy", "openai", "observability", "ai"]
+categories = ["command-line-utilities", "network-programming"]
+
+[dependencies]
+twl-config = { workspace = true }
+twl-server = { workspace = true }
+tokio = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[lints]
+workspace = true

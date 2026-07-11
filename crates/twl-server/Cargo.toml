@@ -1,0 +1,58 @@
+[package]
+name = "twl-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "HTTP server, reverse proxy, and shared application state"
+
+[dependencies]
+axum = { workspace = true }
+axum-login = { workspace = true }
+tokio = { workspace = true }
+reqwest = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+tower-sessions = { workspace = true }
+futures-util = { workspace = true }
+async-stream = { workspace = true }
+async-trait = { workspace = true }
+bytes = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+http = { workspace = true }
+hyper-util = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+twl-config = { workspace = true }
+twl-store = { workspace = true }
+twl-pricing = { workspace = true }
+twl-backends = { workspace = true }
+twl-provider = { workspace = true }
+twl-auth = { workspace = true }
+axum-server = { workspace = true }
+rcgen = { workspace = true }
+rustls = { workspace = true }
+thiserror = { workspace = true }
+rustc-hash = { workspace = true }
+base64 = "0.22"
+rand = "0.8"
+rust-embed = "8"
+
+[dev-dependencies]
+tokio = { workspace = true }
+axum = { workspace = true }
+reqwest = { workspace = true }
+futures-util = { workspace = true }
+bytes = { workspace = true }
+serde_json = { workspace = true }
+rusqlite = { workspace = true }
+twl-config = { workspace = true }
+twl-store = { workspace = true }
+twl-auth = { workspace = true }
+
+[lints]
+workspace = true

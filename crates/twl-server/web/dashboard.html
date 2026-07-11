@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/assets/dashboard.css" />
+  <title>TokenWeasel · Usage</title>
+</head>
+<body>
+
+<header>
+  <h1>TokenWeasel · Usage</h1>
+  <nav class="nav">
+    <a href="/usage" class="active">Usage</a>
+    <a href="/account">Account</a>
+    <button class="signout" id="signoutBtn">Sign out</button>
+  </nav>
+  <span class="spacer"></span>
+  <a class="refresh" href="#" id="refresh">↻ Refresh</a>
+  <span id="refreshStatus"></span>
+</header>
+
+<main>
+
+  <div class="controls">
+    <div class="grow">
+      <label for="modelSelect">Model</label>
+      <select id="modelSelect"><option value="">All models</option></select>
+    </div>
+    <div class="grow" id="viewControl" style="display:none">
+      <label for="viewSelect">View</label>
+      <select id="viewSelect"><option value="">All usage (admin)</option></select>
+    </div>
+    <button class="range" data-days="1">1d</button>
+    <button class="range active" data-days="7">7d</button>
+    <button class="range" data-days="30">30d</button>
+    <button class="range" data-days="90">90d</button>
+  </div>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="panel" id="todayPanel">
+    <h2>Token usage today</h2>
+    <div class="chart-wrap"><svg id="sparkline"></svg></div>
+  </div>
+
+  <div class="panel" id="overTimePanel">
+    <h2>Token usage over time</h2>
+    <div class="legend">
+      <span><i class="swatch" style="background:#00f0ff"></i> Input (prompt)</span>
+      <span><i class="swatch" style="background:#ff0055"></i> Output (completion)</span>
+      <span><i class="swatch" style="background:#2a2a4e"></i> of which cached</span>
+      <span style="display:none"><i class="swatch" style="background:#ffa500"></i> Energy (kWh)</span>
+    </div>
+    <div class="chart-wrap"><svg id="chart" height="260"></svg></div>
+  </div>
+
+  <div class="panel" id="keyPanel" style="display:none">
+    <h2>Token usage by API key</h2>
+    <table id="keyTable">
+      <thead>
+        <tr>
+          <th>Key</th><th>Requests</th><th>Input</th>
+          <th>cached</th><th>Output</th><th>Total</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>Token usage by model</h2>
+    <table id="modelTable">
+      <thead>
+        <tr>
+          <th>Model</th><th>Requests</th><th>Input</th>
+          <th>cached</th><th>Output</th><th>Total</th><th>Cost</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+</main>
+
+<script type="module" src="/assets/js/nav.js"></script>
+<script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+[package]
+name = "twl-auth"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Pure authentication primitives: password hashing and API key generation"
+
+[dependencies]
+argon2 = "0.5"
+http = { workspace = true }
+rand = "0.8"
+sha2 = "0.10"
+tokio = { workspace = true }
+thiserror = { workspace = true }
+twl-store = { workspace = true }
+
+[lints]
+workspace = true

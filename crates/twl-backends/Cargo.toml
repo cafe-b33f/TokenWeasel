@@ -1,0 +1,26 @@
+[package]
+name = "twl-backends"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Backend abstraction and model routing table with wait-free reads"
+
+[dependencies]
+twl-provider = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+arc-swap = { workspace = true }
+smallvec = { workspace = true }
+rustc-hash = { workspace = true }
+crossbeam-utils = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[lints]
+workspace = true

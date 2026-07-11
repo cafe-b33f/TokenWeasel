@@ -1,0 +1,42 @@
+# Rust build and tooling output
+/target/
+**/*.rs.bk
+*.tmp
+*.tmp.*
+*.profraw
+*.profdata
+
+# Local runtime data
+*.db*
+*.sqlite*
+*.exe
+run.bat
+*.log
+/logs/
+
+# Local runtime configuration and secrets
+.env*
+!.env.example
+!.env.sample
+/config.json
+/config.*.json
+!config.example.json
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+tls/
+
+# Editors, operating systems, and local agent state
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+.claude/
+.codex/
+.agents/

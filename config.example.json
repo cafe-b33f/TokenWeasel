@@ -1,0 +1,85 @@
+{
+  "host": "127.0.0.1",
+  "port": 3000,
+  "upstream": null,
+  "db_path": "proxydb.db",
+  "pricing": {
+    "currency": "USD",
+    "unit": 1000000,
+    "models": {
+      "qwen3:8b": {
+        "input": 0.0,
+        "output": 0.0,
+        "input_cached": 0.0
+      },
+      "nomic-embed-text": {
+        "input": 0.0,
+        "output": 0.0,
+        "input_cached": 0.0
+      }
+    }
+  },
+  "max_concurrency": 32,
+  "gpu_watts": null,
+  "backends": [
+    {
+      "provider": "ollama",
+      "upstream": "http://127.0.0.1:11434",
+      "api_key": null,
+      "api_key_env": null,
+      "headers": {},
+      "models": [
+        "qwen3:8b",
+        "nomic-embed-text"
+      ],
+      "models_poll_secs": 30,
+      "gpu_watts": 250.0,
+      "model_types": {
+        "nomic-embed-text": "embedding"
+      },
+      "model_filter": [
+        "qwen3:8b",
+        "nomic-embed-text"
+      ]
+    }
+  ],
+  "dashboard_user": "admin",
+  "dashboard_password": null,
+  "public_usage": false,
+  "require_api_key": true,
+  "load_balancing": {
+    "strategy": "least_loaded",
+    "overload_factor": 1.25
+  },
+  "fair_queue": {
+    "enabled": false,
+    "window_seconds": 1800
+  },
+  "dashboard": {
+    "cards": [
+      "cost",
+      "energy",
+      "tokens",
+      "requests",
+      "io",
+      "cache_hit"
+    ],
+    "graphs": [
+      "today",
+      "over_time"
+    ],
+    "max_rows": 100,
+    "trusted_proxies": []
+  },
+  "retention_days": 90,
+  "tls": {
+    "enabled": true,
+    "cert_path": "tls/cert.pem",
+    "key_path": "tls/key.pem",
+    "hostnames": [
+      "localhost",
+      "127.0.0.1"
+    ]
+  },
+  "metrics_token": null
+}

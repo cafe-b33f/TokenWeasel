@@ -1,0 +1,55 @@
+[workspace]
+members = ["crates/twl", "crates/twl-pricing", "crates/twl-config", "crates/twl-backends", "crates/twl-server", "crates/twl-provider", "crates/twl-auth", "crates/twl-store", "crates/twl-types"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+license = "MIT"
+repository = "https://github.com/cafe-b33f/TokenWeasel"
+homepage = "https://github.com/cafe-b33f/TokenWeasel"
+
+[workspace.dependencies]
+axum = { version = "0.8", features = ["http1"] }
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", default-features = false, features = ["stream", "json", "rustls-tls"] }
+rusqlite = { version = "0.31", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1"
+url = "2"
+tower = { version = "0.5", features = ["limit"] }
+tower-http = { version = "0.6", features = ["timeout"] }
+futures-util = "0.3"
+async-stream = "0.3"
+async-trait = "0.1"
+bytes = "1"
+chrono = "0.4"
+http = "1"
+hyper-util = { version = "0.1", features = ["server-auto", "tokio"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+axum-login = "0.18"
+axum-server = { version = "0.8", default-features = false, features = ["tls-rustls-no-provider"] }
+rcgen = { version = "0.13", default-features = false, features = ["pem", "ring"] }
+rustls = { version = "0.23", default-features = false, features = ["ring"] }
+tower-sessions = "0.14"
+twl-pricing = { path = "crates/twl-pricing" }
+twl-config = { path = "crates/twl-config" }
+twl-backends = { path = "crates/twl-backends" }
+twl-provider = { path = "crates/twl-provider" }
+twl-server = { path = "crates/twl-server" }
+twl-auth = { path = "crates/twl-auth" }
+twl-store = { path = "crates/twl-store" }
+twl-types = { path = "crates/twl-types" }
+arc-swap = "1"
+smallvec = { version = "1", features = ["union"] }
+rustc-hash = "2"
+crossbeam-utils = "0.8"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+missing_debug_implementations = "warn"

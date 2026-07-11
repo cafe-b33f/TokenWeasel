@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/assets/dashboard.css" />
+  <title>TokenWeasel · Account</title>
+</head>
+<body>
+
+<header>
+  <h1>TokenWeasel · Account</h1>
+  <nav class="nav">
+    <a href="/usage">Usage</a>
+    <a href="/account" class="active">Account</a>
+    <button class="signout" id="signoutBtn">Sign out</button>
+  </nav>
+  <span class="spacer"></span>
+</header>
+
+<main>
+
+  <div id="statusMessage" class="status" style="display:none"></div>
+
+  <div class="panel">
+    <h2>My account</h2>
+    <div style="padding:12px 16px;">
+      <div style="margin-bottom:12px;">
+        <strong>Username:</strong> <span id="displayUsername"></span>
+        <span id="adminBadge" class="badge badge-admin" style="display:none">admin</span>
+      </div>
+
+      <h3 style="font-size:12px;margin:16px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Change password</h3>
+      <form id="changePasswordForm">
+        <div class="form-group">
+          <label for="oldPassword">Old password</label>
+          <input type="password" id="oldPassword" required autocomplete="current-password" />
+        </div>
+        <div class="form-group">
+          <label for="newPassword">New password</label>
+          <input type="password" id="newPassword" required autocomplete="new-password" />
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm new password</label>
+          <input type="password" id="confirmPassword" required autocomplete="new-password" />
+        </div>
+        <div>
+          <button type="submit" class="btn">Change password</button>
+          <span id="passwordStatus" class="status-inline"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>API keys</h2>
+    <div style="padding:12px 16px;">
+      <table id="apiKeyTable">
+        <thead>
+          <tr>
+            <th>Name</th><th>Prefix</th><th>Created</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="apiKeyBody"></tbody>
+      </table>
+
+      <div id="oneTimeKeyDisplay" class="key-display" style="display:none">
+        <strong>New API key generated</strong>
+        <p class="key-note">This will not be shown again. Copy it now.</p>
+        <div class="key-value-wrap">
+          <code id="oneTimeKeyValue"></code>
+          <button id="copyKeyBtn" class="btn btn-small">Copy</button>
+        </div>
+      </div>
+
+      <form id="generateKeyForm" style="margin-top:12px;display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="keyName">Name (optional)</label>
+          <input type="text" id="keyName" placeholder="e.g. dev laptop" />
+        </div>
+        <button type="submit" class="btn">Generate new key</button>
+      </form>
+      <span id="keyStatus" class="status-inline"></span>
+    </div>
+  </div>
+
+  <div class="panel" id="adminSection" style="display:none">
+    <h2>User administration</h2>
+    <div style="padding:12px 16px;">
+      <table id="userTable">
+        <thead>
+          <tr>
+            <th>Username</th><th>Role</th><th>Created</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="userBody"></tbody>
+      </table>
+
+      <h3 style="font-size:12px;margin:16px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Create user</h3>
+      <form id="createUserForm" style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="newUsername">Username</label>
+          <input type="text" id="newUsername" required />
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="newUserPassword">Password</label>
+          <input type="password" id="newUserPassword" required />
+        </div>
+        <div class="form-group" style="margin-bottom:0;flex-direction:row;align-items:center;gap:6px;">
+          <input type="checkbox" id="newUserAdmin" style="width:auto" />
+          <label for="newUserAdmin" style="margin:0">Is admin</label>
+        </div>
+        <button type="submit" class="btn">Create user</button>
+        <span id="createUserStatus" class="status-inline"></span>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<script type="module" src="/assets/js/nav.js"></script>
+<script type="module" src="/assets/js/account.js"></script>
+</body>
+</html>

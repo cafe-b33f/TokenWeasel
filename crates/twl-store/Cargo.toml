@@ -1,0 +1,25 @@
+[package]
+name = "twl-store"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Consolidated SQLite-backed store for usage and identity data"
+publish = false
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+rusqlite = { workspace = true }
+r2d2 = "0.8"
+r2d2_sqlite = { version = "0.24", features = ["bundled"] }
+serde = { workspace = true }
+twl-types = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+chrono = { workspace = true }
+
+[lints]
+workspace = true
