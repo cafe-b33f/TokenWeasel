@@ -35,7 +35,7 @@ axum-login = "0.18"
 axum-server = { version = "0.8", default-features = false, features = ["tls-rustls-no-provider"] }
 rcgen = { version = "0.14", default-features = false, features = ["pem", "ring"] }
 rustls = { version = "0.23", default-features = false, features = ["ring"] }
-tower-sessions = "0.14"
+tower-sessions = "0.15"
 twl-pricing = { path = "crates/twl-pricing" }
 twl-config = { path = "crates/twl-config" }
 twl-backends = { path = "crates/twl-backends" }
